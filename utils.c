@@ -6,7 +6,7 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:08:23 by ale-cont          #+#    #+#             */
-/*   Updated: 2022/12/15 21:04:03 by ale-cont         ###   ########.fr       */
+/*   Updated: 2022/12/16 11:44:31 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,9 @@ char **ft_find_path(char **env)
 		i++;
 	}
 	return (NULL);
+}
+
+void ft_execute(char **argv, char **env)
+{
+	
 }
