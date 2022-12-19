@@ -2,7 +2,7 @@ NAME = pipex
 
 HEADERS = pipex.h
 
-SOURCES = 
+SOURCES = ft_split.c libft_utils.c libft_utils_2.c pipex.c utils.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:45:52 by ale-cont          #+#    #+#             */
-/*   Updated: 2022/12/15 20:48:31 by ale-cont         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:16:50 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_strjoin(char *left_str, char *buf)
 	}
 	if (!left_str || !buf)
 		return (NULL);
-	str = ft_calloc(sizeof(char), (ft_strlen(left_str) + ft_strlen(buf) + 2));
+	str = ft_calloc(sizeof(char), (ft_strlen(left_str) + ft_strlen(buf) + 1));
 	if (!str)
 		return (NULL);
 	i = -1;
@@ -46,6 +46,6 @@ char	*ft_strjoin(char *left_str, char *buf)
 			str[i] = left_str[i];
 	while (buf[j] != '\0')
 		str[i++] = buf[j++];
-	str[ft_strlen(left_str) + ft_strlen(buf)] = ' ';
-	return (free(left_str), str);
+	// free(left_str);
+	return (str);
 }

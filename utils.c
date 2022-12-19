@@ -6,7 +6,7 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:08:23 by ale-cont          #+#    #+#             */
-/*   Updated: 2022/12/16 23:07:46 by ale-cont         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:44:55 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	display_error(int nb, char *error)
 {
+	if (nb == -1)
+		ft_putstr_fd("\033[31mPermission denied\n\e[0m", 2);
 	if (nb == 0)
 	{
 		ft_putstr_fd("\033[31mError: Bad arguments\n\e[0m", 2);
@@ -22,10 +24,17 @@ void	display_error(int nb, char *error)
 	else if (nb == 1)
 		ft_putstr_fd("\033[31mError\n\e[0m", 2);
 	else if (nb == 2)
-		ft_putstr_fd(ft_strjoin("This command doesn't exist : ", error), 2);
+	{
+		ft_putstr_fd(ft_strjoin("\033[31mThis command doesn't exist : \e[0m", error), 2);
+		ft_putstr_fd("\n", 2);
+	}
 	else if (nb == 3)
-		ft_putstr_fd(ft_strjoin("Error when executing the command : ", error), 2);
-	exit(EXIT_FAILURE);
+	{
+		ft_putstr_fd(ft_strjoin("\033[31mError when executing the command : \e[0m", error), 2);
+		ft_putstr_fd("\n", 2);
+	}
+	if (nb != 2 && nb != 3)
+		exit(EXIT_FAILURE);
 }
 
 char *ft_find_path(char *cmd, char **env)
@@ -45,13 +54,13 @@ char *ft_find_path(char *cmd, char **env)
 		test_path = ft_strjoin(all_paths[i], "/");
 		path = ft_strjoin(test_path, cmd);
 		free(test_path);
-		if (access(path, F_OK))
+		if (access(path, F_OK) == 0)
 			return (path);
 		free(path);
 	}
-	i = 0;
-	while (all_paths[i])
-		free(all_paths[i++]);
+	i = -1;
+	while (all_paths[++i])
+		free(all_paths[i]);
 	free(all_paths);
 	return (NULL);
 }
@@ -62,16 +71,17 @@ void ft_execute(char *argv, char **env)
 	char	**cmd;
 	char	*path;
 
-	i = 0;
+	i = -1;
 	cmd = ft_split(argv, ' ');
 	path = ft_find_path(cmd[0], env);
 	if (!path)
 	{
 		display_error(2, cmd[0]);
-		while (cmd[i])
+		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
+		exit(EXIT_FAILURE);
 	}
-	if (execve(path, cmd, env) == -1)
+	else if (execve(path, cmd, env) == -1)
 		display_error(3, cmd[0]);
 }
