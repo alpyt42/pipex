@@ -6,7 +6,7 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:08:23 by ale-cont          #+#    #+#             */
-/*   Updated: 2022/12/20 09:21:18 by ale-cont         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:24:58 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 void	display_error(int nb, char *error)
 {
+	if (nb == - 2)
+	{
+		ft_putstr_fd(ft_strjoin("\033[31mno such file or directory: \e[0m", error), 2);
+		ft_putstr_fd("\n", 2);
+	}
 	if (nb == -1)
-		ft_putstr_fd("\033[31mPermission denied\n\e[0m", 2);
+		ft_putstr_fd("\033[31mpermission denied\n\e[0m", 2);
 	if (nb == 0)
 	{
 		ft_putstr_fd("\033[31mError: Bad arguments\n\e[0m", 2);
