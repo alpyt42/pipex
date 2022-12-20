@@ -6,7 +6,7 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:08:23 by ale-cont          #+#    #+#             */
-/*   Updated: 2022/12/19 17:44:55 by ale-cont         ###   ########.fr       */
+/*   Updated: 2022/12/20 09:21:18 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,16 @@ void ft_execute(char *argv, char **env)
 	char	*path;
 
 	i = -1;
-	cmd = ft_split(argv, ' ');
-	path = ft_find_path(cmd[0], env);
+	if (access(argv, F_OK) == 0)
+	{
+		path = ft_strjoin("", argv);
+		cmd = ft_split(argv, ' ');
+	}
+	else
+	{
+		cmd = ft_split(argv, ' ');
+		path = ft_find_path(cmd[0], env);
+	}
 	if (!path)
 	{
 		display_error(2, cmd[0]);
