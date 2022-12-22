@@ -6,43 +6,27 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:08:23 by ale-cont          #+#    #+#             */
-/*   Updated: 2022/12/20 18:24:58 by ale-cont         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:41:32 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	display_error(int nb, char *error)
+void	display_error(char *strerr, char *error)
 {
-	if (nb == - 2)
-	{
-		ft_putstr_fd(ft_strjoin("\033[31mno such file or directory: \e[0m", error), 2);
-		ft_putstr_fd("\n", 2);
-	}
-	if (nb == -1)
-		ft_putstr_fd("\033[31mpermission denied\n\e[0m", 2);
-	if (nb == 0)
-	{
-		ft_putstr_fd("\033[31mError: Bad arguments\n\e[0m", 2);
-		ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <file2>\n", 2);
-	}
-	else if (nb == 1)
-		ft_putstr_fd("\033[31mError\n\e[0m", 2);
-	else if (nb == 2)
-	{
-		ft_putstr_fd(ft_strjoin("\033[31mThis command doesn't exist : \e[0m", error), 2);
-		ft_putstr_fd("\n", 2);
-	}
-	else if (nb == 3)
-	{
-		ft_putstr_fd(ft_strjoin("\033[31mError when executing the command : \e[0m", error), 2);
-		ft_putstr_fd("\n", 2);
-	}
-	if (nb != 2 && nb != 3)
-		exit(EXIT_FAILURE);
+	char	*error_ms;
+
+	error_ms = NULL;
+	if (error[0] != '\0')
+		error_ms = ft_strjoin(strerr, ": ");
+	error_ms = ft_strjoin(error_ms, error);
+	ft_putstr_fd(error_ms, 2);
+	ft_putstr_fd("\n", 2);
+	free(error_ms);
+	exit(EXIT_FAILURE);
 }
 
-char *ft_find_path(char *cmd, char **env)
+char	*ft_find_path(char *cmd, char **env)
 {
 	int		i;
 	char	*path;
@@ -70,9 +54,9 @@ char *ft_find_path(char *cmd, char **env)
 	return (NULL);
 }
 
-void ft_execute(char *argv, char **env)
+void	ft_execute(char *argv, char **env)
 {
-	int 	i;
+	int		i;
 	char	**cmd;
 	char	*path;
 
@@ -89,12 +73,12 @@ void ft_execute(char *argv, char **env)
 	}
 	if (!path)
 	{
-		display_error(2, cmd[0]);
+		display_error("command not found", cmd[0]);
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
 		exit(EXIT_FAILURE);
 	}
 	else if (execve(path, cmd, env) == -1)
-		display_error(3, cmd[0]);
+		display_error(strerror(errno), cmd[0]);
 }
