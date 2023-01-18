@@ -6,16 +6,18 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:08:23 by ale-cont          #+#    #+#             */
-/*   Updated: 2022/12/21 15:41:32 by ale-cont         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:27:02 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	display_error(char *strerr, char *error)
+void	display_error(char *strerr, char *error, int err, char **cmd)
 {
 	char	*error_ms;
+	int		i;
 
+	i = -1;
 	error_ms = NULL;
 	if (error[0] != '\0')
 		error_ms = ft_strjoin(strerr, ": ");
@@ -23,7 +25,13 @@ void	display_error(char *strerr, char *error)
 	ft_putstr_fd(error_ms, 2);
 	ft_putstr_fd("\n", 2);
 	free(error_ms);
-	exit(EXIT_FAILURE);
+	if (cmd)
+	{
+		while (cmd[++i])
+			free(cmd[i]);
+		free(cmd);
+	}
+	exit(err);
 }
 
 char	*ft_find_path(char *cmd, char **env)
@@ -72,13 +80,7 @@ void	ft_execute(char *argv, char **env)
 		path = ft_find_path(cmd[0], env);
 	}
 	if (!path)
-	{
-		display_error("command not found", cmd[0]);
-		while (cmd[++i])
-			free(cmd[i]);
-		free(cmd);
-		exit(EXIT_FAILURE);
-	}
+		display_error("command not found", cmd[0], 127, cmd);
 	else if (execve(path, cmd, env) == -1)
-		display_error(strerror(errno), cmd[0]);
+		display_error(strerror(errno), cmd[0], 1, cmd);
 }
