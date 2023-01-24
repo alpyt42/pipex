@@ -13,7 +13,7 @@ all :    $(NAME)
 $(NAME) : $(OBJECTS)
 	${CC} ${CFLAG} -o $@ $^
 
-%.o : %.c $(HEADERS)
+%.o : %.c $(HEADERS) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
