@@ -12,5 +12,6 @@ pipex
 pipex.c
 pipex.h
 pipex.o
+test_web
 utils.c
 utils.o

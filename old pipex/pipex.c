@@ -6,7 +6,7 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:59:16 by ale-cont          #+#    #+#             */
-/*   Updated: 2023/01/16 10:38:54 by ale-cont         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 15:58:11 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,9 @@ int	main(int argc, char **argv, char **env)
 			display_error(strerror(errno), "");
 		if (pid_fork == 0)
 			child_proc(argv, env, fd);
-		waitpid(pid_fork, NULL, 0);
 		parent_proc(argv, env, fd);
+		waitpid(pid_fork, NULL, 0);
+		
 	}
 	else
 	{
