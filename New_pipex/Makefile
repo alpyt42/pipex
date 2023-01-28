@@ -8,10 +8,8 @@ CC			=	gcc
 
 CFLAGS		=	-Werror -Wall -Wextra -g -I $(HEADER) #-fsanitize=address
 
-SRCS		=	mandatory/child.c \
-				mandatory/erro.c\
-				mandatory/free.c \
-				mandatory/pipex.c\
+SRCS		=	srcs/pipex.c \
+				srcs/get_h_doc.c \
 
 OBJS		=	$(SRCS:.c=.o)
 

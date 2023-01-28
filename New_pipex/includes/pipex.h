@@ -6,7 +6,7 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 16:06:51 by ale-cont          #+#    #+#             */
-/*   Updated: 2023/01/25 16:08:22 by ale-cont         ###   ########.fr       */
+/*   Updated: 2023/01/28 17:37:48 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,22 @@
 # include <sys/wait.h>
 # include <string.h>
 # include <stdio.h>
+# include "../libft/libft.h"
 
+typedef struct s_data
+{
+	int		ac;
+	char	**av;
+	pid_t	*p_id;
+	char	***cmds;
+	char	**en;
+	int		n_cmds;
+	int		**fds;
+	int		in;
+	int		out;
+	int		h_doc;
+}	t_data;
+
+void	get_here_doc(t_data *pipex);
 
 #endif
