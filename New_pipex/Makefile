@@ -10,6 +10,8 @@ CFLAGS		=	-Werror -Wall -Wextra -g -I $(HEADER) #-fsanitize=address
 
 SRCS		=	srcs/pipex.c \
 				srcs/get_h_doc.c \
+				srcs/path_search.c \
+				srcs/execution.c
 
 OBJS		=	$(SRCS:.c=.o)
 

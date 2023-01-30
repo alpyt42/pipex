@@ -6,7 +6,7 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 18:44:48 by ale-cont          #+#    #+#             */
-/*   Updated: 2023/01/28 17:46:19 by ale-cont         ###   ########.fr       */
+/*   Updated: 2023/01/30 14:41:35 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ static void	fill_here_doc(t_data *p, int fd)
 {
 	char	*line;
 	
+	(void)fd;
 	while (1)
 	{
 		ft_dprintf(1, "> ");
 		line = get_next_line(0);
 		if (!line)
 			exit(1);
-		if (!ft_strncmp(line, p->av[2], ft_strlen(p->av[2])))
+		if (!ft_strncmp(p->av[2], line, ft_strlen(line) - 1)\
+			&& ft_strlen(line) - 1 == ft_strlen(p->av[2]))
 			break ;
 		ft_dprintf(fd, "%s", line);
 		free(line);

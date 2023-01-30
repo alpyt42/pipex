@@ -6,7 +6,7 @@
 /*   By: ale-cont <ale-cont@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 16:06:51 by ale-cont          #+#    #+#             */
-/*   Updated: 2023/01/28 17:37:48 by ale-cont         ###   ########.fr       */
+/*   Updated: 2023/01/30 14:19:50 by ale-cont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_data
 	pid_t	*p_id;
 	char	***cmds;
 	char	**en;
+	char	**en_cmd;
 	int		n_cmds;
 	int		**fds;
 	int		in;
@@ -38,5 +39,11 @@ typedef struct s_data
 }	t_data;
 
 void	get_here_doc(t_data *pipex);
+void	get_path(t_data *p);
+void	free_struct(t_data *p);
+char	*get_cmd_path(char *cmd, char **env);
+void	wait_for_process_ids(t_data *p);
+void	pipex_exec(t_data *p);
+void	wait_for_process_ids(t_data *p);
 
 #endif
